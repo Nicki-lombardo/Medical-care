@@ -1,20 +1,20 @@
 "use client";
 
+import Image from "next/image";
+import { Control, Form } from "react-hook-form";
+
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Control } from "react-hook-form";
 import { FormFieldType } from "./PatientForm";
 
 interface CustomProps {
   control: Control<any>;
-  fieldType: FormFieldType;
   name: string;
   label?: string;
   placeholder?: string;
@@ -25,10 +25,39 @@ interface CustomProps {
   showTimeSelect?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
+  fieldType: FormFieldType;
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  return <Input type="text" placeholder="John Doe" />;
+  const { fieldType, iconSrc, iconAlt, placeholder } = props;
+
+  switch (fieldType) {
+    case FormFieldType.INPUT:
+      return (
+        <div className="felx rounded-md-border border-dark-500">
+          {iconSrc && (
+            <Image
+              src={iconSrc}
+              height={24}
+              width={24}
+              alt={iconAlt || "icon"}
+              className="ml-2"
+            />
+          )}
+          <FormControl>
+            <Input
+              placeholder={placeholder}
+              {...field}
+              className="shad-input border-0"
+            />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.SKELETON:
+      return props.renderSkeleton ? props.renderSkeleton(field) : null;
+    default:
+      return null;
+  }
 };
 
 const CustomFormField = (props: CustomProps) => {

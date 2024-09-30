@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
-import CustomFormField from "./CustomFormField"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import CustomFormField from "./CustomFormField";
 
 export enum FormFieldType {
   INPUT = "input",
   TEXTAREA = "textarea",
-  PHONE-INPUT= "phoneInput",
+  PHONE_INPUT = "phoneInput",
   CHECKBOX = "checkbox",
   DATE_PICKER = "datePicker",
   SELECT = "select",
@@ -41,7 +41,7 @@ const PatientForm = () => {
         <section className="mb-12 space-y-4">
           <h2 className="header">Hi there!</h2>
           <p className="text-dark-700">
-            We're excited to have you join us. Please fill out the form below to
+            We're excited to have you join us! Please fill out the form below to
             schedule your first appointment.
           </p>
         </section>
@@ -53,6 +53,24 @@ const PatientForm = () => {
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"
           iconAlt="User"
+        />
+
+        <CustomFormField
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="email"
+          label="Email"
+          placeholder="johndoe@mail.com"
+          iconSrc="/assets/icons/email.svg"
+          iconAlt="email"
+        />
+
+        <CustomFormField
+          fieldType={FormFieldType.PHONE_INPUT}
+          control={form.control}
+          name="phone"
+          label="Phone number"
+          placeholder="(555) 123-4567"
         />
 
         <Button type="submit">Submit</Button>
