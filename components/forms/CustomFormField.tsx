@@ -1,7 +1,10 @@
 "use client";
 
+import { E164Number } from "libphonenumber-js/core";
 import Image from "next/image";
-import { Control, Form } from "react-hook-form";
+import { Control } from "react-hook-form";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 import {
   FormControl,
@@ -34,7 +37,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="felx rounded-md-border border-dark-500">
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
           {iconSrc && (
             <Image
               src={iconSrc}
@@ -52,6 +55,20 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             />
           </FormControl>
         </div>
+      );
+
+    case FormFieldType.PHONE_INPUT:
+      return (
+        <FormControl>
+          <PhoneInput
+            defaultCountry="US"
+            placeholder={placeholder}
+            internationalWithCountryCallingCode
+            value={field.value as E164Number | undefined}
+            onChange={field.onChange}
+            className="input-phone"
+          />
+        </FormControl>
       );
     case FormFieldType.SKELETON:
       return props.renderSkeleton ? props.renderSkeleton(field) : null;
