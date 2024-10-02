@@ -8,5 +8,7 @@ export const UserFormValidation = z.object({
   email: z.string().email("Invalid email address"),
   phone: z
     .string()
-    .refine((phone) => /^\d{10}$/.test(phone), "Invalid Phone number"),
+    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
 });
+
+//el error venia del la linea 11 - faltaba un caracter + en la expresion regular

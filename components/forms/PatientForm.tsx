@@ -1,18 +1,20 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-//import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import CustomFormField from "./CustomFormField";
-import { useState } from "react";
-//import { SubmitButton } from "@/components/ui/SubmitButton";
-import SubmitButton from "../ui/SubmitButton";
-import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser } from "@/lib/actions/patient.actions";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { z } from "zod";
 
+import { Form } from "@/components/ui/form";
+import { createUser } from "@/lib/actions/patient.actions";
+import { UserFormValidation } from "@/lib/validation";
+
+import "react-phone-number-input/style.css";
+import CustomFormField, { FormFieldType } from "../CustomFormField";
+import SubmitButton from "../ui/SubmitButton";
+
+/*
 export enum FormFieldType {
   INPUT = "input",
   TEXTAREA = "textarea",
@@ -21,11 +23,12 @@ export enum FormFieldType {
   DATE_PICKER = "datePicker",
   SELECT = "select",
   SKELETON = "skeleton",
-}
+} */
 
 const PatientForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
@@ -35,32 +38,32 @@ const PatientForm = () => {
     },
   });
 
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) {
+  const onSubmit = async (values: z.infer<typeof UserFormValidation>) => {
     setIsLoading(true);
 
     try {
       const userDate = {
-        name,
-        email,
-        phone,
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
       };
-      const user = await createUser(userDate);
 
-      if (user) router.push(`/patients/${user.id}/register`);
+      const newUser = await createUser(userDate);
+
+      if (newUser) {
+        router.push(`/patients/${newUser.id}/register`);
+      }
     } catch (error) {
       console.error(error);
     }
-  }
+    setIsLoading(false);
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
-          <h2 className="header">Hi there!</h2>
+          <h2 className="header">Hi there 👩‍⚕️</h2>
           <p className="text-dark-700">
             We're excited to have you join us! Please fill out the form below to
             schedule your first appointment.
