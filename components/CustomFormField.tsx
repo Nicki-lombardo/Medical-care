@@ -7,7 +7,8 @@ import PhoneInput from "react-phone-number-input";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-//import { Checkbox } from "./ui/checkbox";
+import { Checkbox } from "./ui/checkbox";
+
 import {
   FormControl,
   FormField,
@@ -16,8 +17,8 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-//import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -129,12 +130,12 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
-    /*
+
     case FormFieldType.SELECT:
       return (
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
+            <FormControl className="shad-select-trigger">
               <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
@@ -144,7 +145,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             </SelectContent>
           </Select>
         </FormControl>
-      ); */
+      );
     case FormFieldType.SKELETON:
       return props.renderSkeleton ? props.renderSkeleton(field) : null;
     default:
