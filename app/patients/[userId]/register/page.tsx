@@ -1,12 +1,14 @@
 import Image from "next/image";
-//import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import RegisterForm from "@/components/forms/RegisterForm";
-//import React from "react";
-import { getUser } from "@/lib/actions/patient.actions";
+import { getPatient, getUser } from "@/lib/actions/patient.actions";
 
 const Register = async ({ params: { userId } }: SearchParamProps) => {
   const user = await getUser(userId);
+  const patient = await getPatient(userId);
+
+  if (patient) redirect(`/patients/${userId}/new-appointment`);
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -19,9 +21,10 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
             alt="patient"
             className="mb-12 h-10 w-fit"
           />
+
           <RegisterForm user={user} />
 
-          <p className="copyright py-12">© 2024 MedicalCare</p>
+          <p className="copyright py-12">© 2024 Medical Care</p>
         </div>
       </section>
 
