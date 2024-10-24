@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 export const UserFormValidation = z.object({
+
+  // User
   name: z
     .string()
     .min(2, "Name must be at least 2 characters")
@@ -12,6 +14,7 @@ export const UserFormValidation = z.object({
 });
 
 export const PatientFormValidation = z.object({
+  // Patient
   name: z
     .string()
     .min(2, "Name must be at least 2 characters")

@@ -34,20 +34,17 @@ const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Asegúrate de que user nunca sea undefined - si lo es, asigna un objeto vacío a safeUser en su lugar!
 
-  if (!user) {
-    // Si `user` es `undefined` o `null`, podemos manejarlo aquí
-    return <div>Loading...</div>;
-  }
-  
+  const safeUser = user || { name: "", email: "", phone: "" };
 
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+      name: safeUser.name,
+      email: safeUser.email,
+      phone: safeUser.phone,
     },
   });
 
